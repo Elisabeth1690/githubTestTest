@@ -3,9 +3,29 @@ html {
   margin: 0;
   padding: 0;
   background-color: rgb(231, 194, 147);
-  display: grid;
 }
 
 h1 {
   text-align: center;
+}
+.btn-conteiner {
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  width: 100px;
+  margin: 30px;
+}
+
+#griffindor-Btn {
+  background-color: red;
+}
+#slytherin-Btn {
+  background-color: green;
+}
+#huffelpuff-Btn {
+  background-color: yellow;
+}
+#ravenclaw-Btn {
+  background-color: blue;
 }
