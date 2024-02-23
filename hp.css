@@ -30,7 +30,7 @@ h1 {
   background-color: blue;
 }
 
-#house-Conteiner {
+.house-Conteiner {
   display: flex;
   justify-content: space-around;
 }
