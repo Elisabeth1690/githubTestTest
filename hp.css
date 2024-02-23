@@ -2,7 +2,7 @@ body,
 html {
   margin: 0;
   padding: 0;
-  background-color: rgb(231, 194, 147);
+  background-color: rgb(231, 202, 128);
 }
 
 h1 {
@@ -10,11 +10,11 @@ h1 {
 }
 .btn-conteiner {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 .btn {
   width: 100px;
-  margin: 30px;
+  height: 50px;
 }
 
 #griffindor-Btn {
@@ -28,4 +28,9 @@ h1 {
 }
 #ravenclaw-Btn {
   background-color: blue;
+}
+
+#house-Conteiner {
+  display: flex;
+  justify-content: space-around;
 }
