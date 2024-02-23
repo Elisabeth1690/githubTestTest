@@ -1,0 +1,11 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(231, 194, 147);
+  display: grid;
+}
+
+h1 {
+  text-align: center;
+}
