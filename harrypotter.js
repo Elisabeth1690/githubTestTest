@@ -36,12 +36,11 @@ async function getGriffendorHouse() {
 }
 
 function showAllGriffendor(griffendorHouseArray) {
-  console.log("vi er inne i showAllGriffendor");
   griffendorHouseArray.forEach((student) => {
     let yearBirth = student.yearOfBirth;
     let age = 2023 - yearBirth;
-    if (age == 2023) {
-      ("uvisst");
+    if (yearBirth === null) {
+      age = "Uvisst";
     }
 
     let griffindorStudensCon = document.createElement("div");
