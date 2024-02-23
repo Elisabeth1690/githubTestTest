@@ -8,12 +8,14 @@ const slytherinContainer = document.getElementById("slytherin-Conteiner");
 const huffelpuffContainer = document.getElementById("huffelpuff-Conteiner");
 const ravenclawContainer = document.getElementById("ravenclaw-Conteiner");
 let griffindorHouse;
+let slytherinHouse;
 let griffindorHouseArray = [];
-//let slytherinHouseArray;
+let slytherinHouseArray = [];
 //let huffelpuffHouseArray;
 //let ravenclawHouseArray;
 
 griffendorBtn.addEventListener("click", getGriffendorHouse);
+slytherinBtn.addEventListener("click", getSlytherinHouse);
 
 async function getGriffendorHouse() {
   try {
@@ -35,33 +37,104 @@ async function getGriffendorHouse() {
   }
 }
 
-function showAllGriffendor(griffendorHouseArray) {
-  griffendorHouseArray.forEach((student) => {
+function showAllGriffendor(hogwartsStudent) {
+  hogwartsStudent.forEach((student) => {
     let yearBirth = student.yearOfBirth;
     let age = 2023 - yearBirth;
     if (yearBirth === null) {
       age = "Uvisst";
     }
-
+    let StudenPitcher = `<img src="${student.image}" height="90px" width="60px">`;
+    if (student.image === "") {
+      StudenPitcher = "Uvisst";
+    }
+    console.log(StudenPitcher);
     let griffindorStudensCon = document.createElement("div");
     griffindorStudensCon.innerHTML = `
                 Name: ${student.name} <br>
                 House: ${student.house}<br>
                 Age: ${age}<br>
-                <img src="${student.image}" height="90px" width="60px">
+                ${StudenPitcher}
       `;
-    griffindorStudensCon.style.display = "flex";
-    griffindorStudensCon.style.flexDirection = "column";
-    griffindorStudensCon.style.alignItems = "center";
-    griffindorStudensCon.style.justifyContent = "center";
-    griffindorStudensCon.style.padding = "5px";
-    griffindorStudensCon.style.color = "blue";
-    griffindorStudensCon.style.fontSize = "medium";
-    griffindorStudensCon.style.width = "180px";
-    griffindorStudensCon.style.height = "180px";
-    griffindorStudensCon.style.backgroundColor = "beige";
-    griffindorStudensCon.style.borderRadius = "15px";
-    griffindorStudensCon.style.margin = "15px";
+    StyleCard(griffindorStudensCon);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Slett Student";
+    deleteBtn.style.backgroundColor = "red";
+    //deleteBtn.addEventListener("click", deleteStudent);
+    deleteBtn.style.width = "100px";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.margin = "10px";
+
     griffindorContainer.appendChild(griffindorStudensCon);
+    griffindorStudensCon.appendChild(deleteBtn);
+  });
+}
+
+function StyleCard(griffindorStudensCon1) {
+  griffindorStudensCon1.style.display = "flex";
+  griffindorStudensCon1.style.flexDirection = "column";
+  griffindorStudensCon1.style.alignItems = "center";
+  griffindorStudensCon1.style.justifyContent = "center";
+  griffindorStudensCon1.style.padding = "5px";
+  griffindorStudensCon1.style.color = "blue";
+  griffindorStudensCon1.style.fontSize = "medium";
+  griffindorStudensCon1.style.width = "180px";
+  griffindorStudensCon1.style.height = "180px";
+  griffindorStudensCon1.style.backgroundColor = "beige";
+  griffindorStudensCon1.style.borderRadius = "15px";
+  griffindorStudensCon1.style.margin = "15px";
+}
+
+// Slyterin
+async function getSlytherinHouse() {
+  try {
+    const SlyterinRequwst = await fetch(
+      "https://hp-api.onrender.com/api/characters/students"
+    );
+
+    slytherinHouse = await SlyterinRequwst.json();
+    const slytherinHouseDoorman = slytherinHouse.filter(
+      (slytherinHouse) =>
+        slytherinHouse.house === "Slytherin" &&
+        slytherinHouse.hogwartsStudent === true
+    );
+    slytherinHouseArray.push(slytherinHouseDoorman);
+    console.log(slytherinHouseDoorman);
+    // funcjon
+    showAllSlyterin(slytherinHouseDoorman);
+  } catch (error) {
+    console.error("Ops klarte ikke å laste ned hogwarts elever", error);
+  }
+}
+function showAllSlyterin(slytherinStudent) {
+  slytherinStudent.forEach((student) => {
+    let yearBirth = student.yearOfBirth;
+    let age = 2023 - yearBirth;
+    if (yearBirth === null) {
+      age = "Uvisst";
+    }
+    let StudenPitcher = `<img src="${student.image}" height="90px" width="60px">`;
+    if (student.image === "") {
+      StudenPitcher = "Uvisst";
+    }
+    console.log(StudenPitcher);
+    let slytherinStudensCon = document.createElement("div");
+    slytherinStudensCon.innerHTML = `
+                Name: ${student.name} <br>
+                House: ${student.house}<br>
+                Age: ${age}<br>
+                ${StudenPitcher}
+      `;
+    StyleCard(slytherinStudensCon);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Slett Student";
+    deleteBtn.style.backgroundColor = "red";
+    //deleteBtn.addEventListener("click", deleteStudent);
+    deleteBtn.style.width = "100px";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.margin = "10px";
+
+    slytherinContainer.appendChild(slytherinStudensCon);
+    slytherinStudensCon.appendChild(deleteBtn);
   });
 }
