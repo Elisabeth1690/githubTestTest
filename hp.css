@@ -13,12 +13,14 @@ h1 {
   justify-content: space-around;
 }
 .btn {
-  width: 100px;
+  width: 150px;
   height: 50px;
+  font-size: larger;
 }
 
 #griffindor-Btn {
-  background-color: red;
+  background-color: rgb(231, 111, 32);
+  color: red;
 }
 #slytherin-Btn {
   background-color: green;
