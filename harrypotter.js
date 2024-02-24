@@ -9,13 +9,16 @@ const huffelpuffContainer = document.getElementById("huffelpuff-Conteiner");
 const ravenclawContainer = document.getElementById("ravenclaw-Conteiner");
 let griffindorHouse;
 let slytherinHouse;
+let huffelpuffHouse;
 let griffindorHouseArray = [];
 let slytherinHouseArray = [];
-//let huffelpuffHouseArray;
+let huffelpuffHouseArray = [];
+
 //let ravenclawHouseArray;
 
 griffendorBtn.addEventListener("click", getGriffendorHouse);
 slytherinBtn.addEventListener("click", getSlytherinHouse);
+huffelpuffBtn.addEventListener("click", getHuffelpuffHouse);
 
 async function getGriffendorHouse() {
   try {
@@ -98,15 +101,15 @@ async function getSlytherinHouse() {
         slytherinHouse.house === "Slytherin" &&
         slytherinHouse.hogwartsStudent === true
     );
-    slytherinHouseArray.push(slytherinHouseDoorman);
+    huffelpuffHouseArray.push(slytherinHouseDoorman);
     console.log(slytherinHouseDoorman);
     // funcjon
-    showAllSlyterin(slytherinHouseDoorman);
+    showAllSlytherin(slytherinHouseDoorman);
   } catch (error) {
     console.error("Ops klarte ikke å laste ned hogwarts elever", error);
   }
 }
-function showAllSlyterin(slytherinStudent) {
+function showAllSlytherin(slytherinStudent) {
   slytherinStudent.forEach((student) => {
     let yearBirth = student.yearOfBirth;
     let age = 2023 - yearBirth;
@@ -138,3 +141,59 @@ function showAllSlyterin(slytherinStudent) {
     slytherinStudensCon.appendChild(deleteBtn);
   });
 }
+
+//huffelPuff
+async function getHuffelpuffHouse() {
+  try {
+    const HuffelpuffRequwst = await fetch(
+      "https://hp-api.onrender.com/api/characters/students"
+    );
+
+    huffelpuffHouse = await HuffelpuffRequwst.json();
+    const huffelpuffHouseDoorman = huffelpuffHouse.filter(
+      (huffelpuffHouse) =>
+        huffelpuffHouse.house === "Hufflepuff" &&
+        huffelpuffHouse.hogwartsStudent === true
+    );
+    huffelpuffHouseArray.push(huffelpuffHouseDoorman);
+    console.log(huffelpuffHouseDoorman);
+    // funcjon
+    showAllHuffelpuff(huffelpuffHouseDoorman);
+  } catch (error) {
+    console.error("Ops klarte ikke å laste ned hogwarts elever", error);
+  }
+}
+function showAllHuffelpuff(huffelpuffStudent) {
+  huffelpuffStudent.forEach((student) => {
+    let yearBirth = student.yearOfBirth;
+    let age = 2023 - yearBirth;
+    if (yearBirth === null) {
+      age = "Uvisst";
+    }
+    let StudenPitcher = `<img src="${student.image}" height="90px" width="60px">`;
+    if (student.image === "") {
+      StudenPitcher = "Uvisst";
+    }
+    console.log(StudenPitcher);
+    let huffelpuffStudensCon = document.createElement("div");
+    huffelpuffStudensCon.innerHTML = `
+                Name: ${student.name} <br>
+                House: ${student.house}<br>
+                Age: ${age}<br>
+                ${StudenPitcher}
+      `;
+    StyleCard(huffelpuffStudensCon);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Slett Student";
+    deleteBtn.style.backgroundColor = "red";
+    //deleteBtn.addEventListener("click", deleteStudent);
+    deleteBtn.style.width = "100px";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.margin = "10px";
+
+    huffelpuffContainer.appendChild(huffelpuffStudensCon);
+    huffelpuffStudensCon.appendChild(deleteBtn);
+  });
+}
+
+//Raven
