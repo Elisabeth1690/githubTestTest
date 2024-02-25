@@ -10,15 +10,16 @@ const ravenclawContainer = document.getElementById("ravenclaw-Conteiner");
 let griffindorHouse;
 let slytherinHouse;
 let huffelpuffHouse;
+let ravenclawHouse;
 let griffindorHouseArray = [];
 let slytherinHouseArray = [];
 let huffelpuffHouseArray = [];
-
-//let ravenclawHouseArray;
+let ravenclawHouseArray = [];
 
 griffendorBtn.addEventListener("click", getGriffendorHouse);
 slytherinBtn.addEventListener("click", getSlytherinHouse);
 huffelpuffBtn.addEventListener("click", getHuffelpuffHouse);
+ravenclawBtn.addEventListener("click", getHRavenclawHouse);
 
 async function getGriffendorHouse() {
   try {
@@ -41,15 +42,16 @@ async function getGriffendorHouse() {
 }
 
 function showAllGriffendor(hogwartsStudent) {
-  hogwartsStudent.forEach((student) => {
+  hogwartsStudent.forEach((student /*index*/) => {
     let yearBirth = student.yearOfBirth;
     let age = 2023 - yearBirth;
+    console.log(age);
     if (yearBirth === null) {
       age = "Uvisst";
     }
     let StudenPitcher = `<img src="${student.image}" height="90px" width="60px">`;
     if (student.image === "") {
-      StudenPitcher = "Uvisst";
+      StudenPitcher = "Finnes ikke bilde";
     }
     console.log(StudenPitcher);
     let griffindorStudensCon = document.createElement("div");
@@ -73,19 +75,19 @@ function showAllGriffendor(hogwartsStudent) {
   });
 }
 
-function StyleCard(griffindorStudensCon1) {
-  griffindorStudensCon1.style.display = "flex";
-  griffindorStudensCon1.style.flexDirection = "column";
-  griffindorStudensCon1.style.alignItems = "center";
-  griffindorStudensCon1.style.justifyContent = "center";
-  griffindorStudensCon1.style.padding = "5px";
-  griffindorStudensCon1.style.color = "blue";
-  griffindorStudensCon1.style.fontSize = "medium";
-  griffindorStudensCon1.style.width = "180px";
-  griffindorStudensCon1.style.height = "180px";
-  griffindorStudensCon1.style.backgroundColor = "beige";
-  griffindorStudensCon1.style.borderRadius = "15px";
-  griffindorStudensCon1.style.margin = "15px";
+function StyleCard(div1) {
+  div1.style.display = "flex";
+  div1.style.flexDirection = "column";
+  div1.style.alignItems = "center";
+  div1.style.justifyContent = "center";
+  div1.style.padding = "5px";
+  div1.style.color = "blue";
+  div1.style.fontSize = "medium";
+  div1.style.width = "180px";
+  div1.style.height = "180px";
+  div1.style.backgroundColor = "beige";
+  div1.style.borderRadius = "15px";
+  div1.style.margin = "15px";
 }
 
 // Slyterin
@@ -197,3 +199,55 @@ function showAllHuffelpuff(huffelpuffStudent) {
 }
 
 //Raven
+async function getHRavenclawHouse() {
+  try {
+    const ravenclawRequwst = await fetch(
+      "https://hp-api.onrender.com/api/characters/students"
+    );
+
+    ravenclawHouse = await ravenclawRequwst.json();
+    const ravenclawHouseDoorman = ravenclawHouse.filter(
+      (ravenclawHouse) =>
+        ravenclawHouse.house === "Ravenclaw" &&
+        ravenclawHouse.hogwartsStudent === true
+    );
+    ravenclawHouseArray.push(ravenclawHouseDoorman);
+    console.log(ravenclawHouseDoorman);
+    // funcjon
+    showAllRavenclaw(ravenclawHouseDoorman);
+  } catch (error) {
+    console.error("Ops klarte ikke å laste ned hogwarts elever", error);
+  }
+}
+function showAllRavenclaw(ravenclawStudent) {
+  ravenclawStudent.forEach((student) => {
+    let yearBirth = student.yearOfBirth;
+    let age = 2023 - yearBirth;
+    if (yearBirth === null) {
+      age = "Uvisst";
+    }
+    let StudenPitcher = `<img src="${student.image}" height="90px" width="60px">`;
+    if (student.image === "") {
+      StudenPitcher = "Uvisst";
+    }
+    console.log(StudenPitcher);
+    let ravenclawStudensCon = document.createElement("div");
+    ravenclawStudensCon.innerHTML = `
+                  Name: ${student.name} <br>
+                  House: ${student.house}<br>
+                  Age: ${age}<br>
+                  ${StudenPitcher}
+        `;
+    StyleCard(ravenclawStudensCon);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Slett Student";
+    deleteBtn.style.backgroundColor = "red";
+    //deleteBtn.addEventListener("click", deleteStudent);
+    deleteBtn.style.width = "100px";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.margin = "10px";
+
+    ravenclawContainer.appendChild(ravenclawStudensCon);
+    ravenclawStudensCon.appendChild(deleteBtn);
+  });
+}
