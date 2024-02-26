@@ -34,14 +34,14 @@ async function getGriffendorHouse() {
         griffindorHouse.hogwartsStudent === true
     );
     griffindorHouseArray.push(griffindorHouseDoorman);
-    console.log(griffindorHouseDoorman);
-    showAllGriffendor(griffindorHouseDoorman);
+    console.log(griffindorHouseArray);
+    showAllGriffindor(griffindorHouseDoorman);
   } catch (error) {
     console.error("Ops klarte ikke å laste ned hogwarts elever", error);
   }
 }
 
-function showAllGriffendor(hogwartsStudent) {
+function showAllGriffindor(hogwartsStudent) {
   hogwartsStudent.forEach((student /*index*/) => {
     let yearBirth = student.yearOfBirth;
     let age = 2023 - yearBirth;
@@ -230,7 +230,7 @@ function showAllRavenclaw(ravenclawStudent) {
     if (student.image === "") {
       StudenPitcher = "Uvisst";
     }
-    console.log(StudenPitcher);
+
     let ravenclawStudensCon = document.createElement("div");
     ravenclawStudensCon.innerHTML = `
                   Name: ${student.name} <br>
@@ -250,4 +250,19 @@ function showAllRavenclaw(ravenclawStudent) {
     ravenclawContainer.appendChild(ravenclawStudensCon);
     ravenclawStudensCon.appendChild(deleteBtn);
   });
+}
+let searchInput = document.getElementById("Search-Input");
+searchInput.addEventListener("keyup", SearchForStudent);
+
+function SearchForStudent() {
+  let searchValue = searchInput.value.toLowerCase();
+  for (let i = 0; i < griffindorHouseArray.length; i++) {
+    let studentName = griffindorHouseArray[i].name.toLowerCase();
+
+    if (studentName.includes(searchValue)) {
+      showAllGriffindor();
+      console.log(griffindorHouseArray[i]);
+      console.log("hello");
+    }
+  }
 }

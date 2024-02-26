@@ -38,8 +38,8 @@ h1 {
 }
 #Search-Input {
   width: 200px;
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #363434; /* Add a grey border */
-  margin: 10px 30px; /* Add some space below the input */
+  font-size: 16px; 
+  padding: 12px 20px 12px 40px; 
+  border: 1px solid #363434; 
+  margin: 10px 30px; /
 }
